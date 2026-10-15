@@ -1,0 +1,9 @@
+[project]
+name = "resume-matcher-agent"
+version = "0.1.0"
+description = "LangGraph agent that compares a resume with a job description and returns a skill gap analysis"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
