@@ -1,0 +1,21 @@
+Rahul Verma
+Software Engineer | rahul.verma@example.com | Pune
+
+SUMMARY
+Backend developer building REST APIs with C#, ASP.NET Core and SQL Server.
+
+EXPERIENCE
+Software Engineer, Acme Tech (Jan 2023 - Present)
+- Built ASP.NET Core Web API services used by 20k daily users
+- Designed SQL Server schemas and optimised queries with Entity Framework Core
+- Wrote xUnit tests and set up GitHub Actions pipelines
+- Integrated Azure OpenAI for a support ticket summariser
+
+Intern, Bright Labs (Jun 2022 - Dec 2022)
+- Built an Angular dashboard over internal REST APIs
+
+SKILLS
+C#, .NET 8, ASP.NET Core, Entity Framework, LINQ, SQL Server, Angular, TypeScript, Git, Azure, xUnit
+
+EDUCATION
+B.Tech in Computer Science, 2022

@@ -1,0 +1,18 @@
+Job Title: Senior .NET Backend Developer
+
+About the role
+We are looking for a backend engineer to build and scale our microservices platform.
+
+Requirements
+- 3+ years of experience with C# and ASP.NET Core
+- Strong SQL Server and Entity Framework skills
+- Experience building microservices and REST APIs
+- Hands-on with Docker and Azure
+- Unit testing (xUnit or NUnit)
+- Bachelor's degree in Computer Science or related field
+
+Nice to have
+- Kubernetes (AKS)
+- Redis caching
+- RabbitMQ or Azure Service Bus
+- Exposure to GenAI / LLM integrations

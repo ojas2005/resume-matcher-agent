@@ -1,0 +1,17 @@
+Role: GenAI Engineer
+
+Responsibilities
+- Build LLM powered agents and RAG pipelines for enterprise customers
+- Ship production APIs with FastAPI
+
+Must have
+- 2+ years with Python
+- LangChain and LangGraph
+- RAG with a vector database (FAISS, Qdrant or Pinecone)
+- Prompt engineering and evaluation
+- Docker, Git
+
+Good to have
+- Azure OpenAI
+- Kubernetes
+- Semantic Kernel or .NET background
