@@ -13,6 +13,14 @@ _RANGE = re.compile(
     re.IGNORECASE,
 )
 
+EDUCATION_LEVELS: list[tuple[int, str, tuple[str, ...]]] = [
+    (4, "PhD", ("phd", "ph.d", "doctorate")),
+    (3, "Master's", ("master", "m.tech", "mtech", "m.sc", "msc", "mca", "mba", "m.e.")),
+    (2, "Bachelor's", ("bachelor", "b.tech", "btech", "b.e.", "b.sc", "bsc", "bca", "b.s.", "graduate")),
+    (1, "Diploma", ("diploma",)),
+]
+
+
 def _month(token: str | None, default: int) -> int:
     return _MONTHS.get((token or "").lower()[:3], default)
 
@@ -39,3 +47,10 @@ def resume_years(text: str, today: date | None = None) -> float:
 def required_years(jd_text: str) -> float:
     found = [float(x) for x in _YEARS_MENTION.findall(jd_text)]
     return min(found) if found else 0.0
+
+
+def education_level(text: str) -> tuple[int, list[str]]:
+    lowered = text.lower()
+    labels = [label for _, label, keys in EDUCATION_LEVELS if any(k in lowered for k in keys)]
+    level = max((lvl for lvl, _, keys in EDUCATION_LEVELS if any(k in lowered for k in keys)), default=0)
+    return level, labels
