@@ -8,6 +8,11 @@ def test_date_ranges_until_present():
     assert years_from_ranges(text, today=date(2025, 1, 1)) == 2.0
 
 
+def test_multiple_ranges_add_up():
+    text = "Jun 2020 - Dec 2020\nJan 2021 - Dec 2022"  # 7 + 24 months
+    assert years_from_ranges(text) == 2.6
+
+
 def test_resume_years_takes_explicit_mentions():
     assert resume_years("5+ years building APIs") == 5.0
 

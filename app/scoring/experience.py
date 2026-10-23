@@ -33,7 +33,7 @@ def years_from_ranges(text: str, today: date | None = None) -> float:
         if m["now"]:
             end = today.year * 12 + today.month
         else:
-            end = int(m["y2"]) * 12 + _month(m["m2"], 12)
+            end = int(m["y2"]) * 12 + _month(m["m2"], 12) + 1  # end month counts in full
         if end > start:
             months += end - start
     return round(months / 12, 1)
