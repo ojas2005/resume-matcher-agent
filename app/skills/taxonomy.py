@@ -73,3 +73,20 @@ IMPLIED_SKILLS: dict[str, list[str]] = {
     "sql server": ["sql"],
     "postgresql": ["sql"],
 }
+
+# Short hints used when the LLM is not available.
+LEARNING_HINTS: dict[str, str] = {
+    "docker": "Containerise one of your existing APIs and push the image to a registry.",
+    "kubernetes": "Deploy a containerised service to a local kind/minikube cluster with a Deployment and Service.",
+    "azure": "Deploy an API to Azure App Service and wire it to an Azure SQL database.",
+    "aws": "Host a small API on AWS (Lambda or ECS) and note it on your resume.",
+    "microservices": "Split a monolith project into two services that talk over REST or gRPC.",
+    "unit testing": "Add a test project with meaningful coverage to one of your repos.",
+    "ci/cd": "Add a GitHub Actions workflow that builds, tests and lints on every push.",
+    "react": "Build a small React frontend that consumes one of your APIs.",
+    "angular": "Build an Angular frontend with routing and a service layer over a REST API.",
+    "rag": "Build a document Q&A bot with a vector store and show retrieval quality checks.",
+    "langgraph": "Build a multi-step agent graph with tool calls and conditional routing.",
+    "redis": "Add Redis caching to a read-heavy endpoint and measure the speed-up.",
+    "rabbitmq": "Publish and consume events between two services through a message broker.",
+}
