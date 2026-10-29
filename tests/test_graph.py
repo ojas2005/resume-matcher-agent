@@ -16,3 +16,11 @@ def test_dotnet_resume_against_genai_jd_is_weaker(resume_text, jd_text, genai_jd
     genai = run_matcher(resume_text, genai_jd_text)
     assert genai.score.overall < dotnet.score.overall
     assert "langgraph" in genai.skills.missing_required
+
+
+def test_perfect_match_skips_recommendations():
+    resume = "Asha Rao\nC# and Docker developer, 4 years of experience. B.Tech."
+    jd = "Backend Developer\nRequirements\n- C#\n- Docker\n- 2+ years"
+    report = run_matcher(resume, jd)
+    assert report.fit_label == "Strong fit"
+    assert report.recommendations == []

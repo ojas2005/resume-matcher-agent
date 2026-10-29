@@ -40,3 +40,10 @@ def rule_based_summary(state: MatcherState) -> str:
 
 def recommend_node(state: MatcherState) -> dict:
     return {"summary": rule_based_summary(state), "recommendations": rule_based_recommendations(state)}
+
+
+def strong_fit_node(state: MatcherState) -> dict:
+    return {
+        "summary": rule_based_summary(state) + " No skill gaps found against this job description.",
+        "recommendations": [],
+    }
