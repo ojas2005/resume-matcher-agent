@@ -1,7 +1,12 @@
 from app.agent.state import MatcherState
+from app.llm.client import get_llm
+from app.llm.prompts import ADVICE_PROMPT, LLMAdvice
+from app.logging_config import get_logger
 from app.models.schemas import Recommendation
 from app.scoring.scorer import fit_label
 from app.skills.taxonomy import LEARNING_HINTS
+
+log = get_logger(__name__)
 
 
 def rule_based_recommendations(state: MatcherState) -> list[Recommendation]:
@@ -39,7 +44,28 @@ def rule_based_summary(state: MatcherState) -> str:
 
 
 def recommend_node(state: MatcherState) -> dict:
-    return {"summary": rule_based_summary(state), "recommendations": rule_based_recommendations(state)}
+    fallback = {"summary": rule_based_summary(state), "recommendations": rule_based_recommendations(state)}
+    llm = get_llm()
+    if llm is None:
+        return fallback
+
+    skills, resume, job, score = state["skills"], state["resume"], state["job"], state["score"]
+    try:
+        advice: LLMAdvice = (ADVICE_PROMPT | llm.with_structured_output(LLMAdvice)).invoke({
+            "job_title": job.title or "unknown",
+            "overall": score.overall,
+            "fit": fit_label(score.overall),
+            "matched_required": ", ".join(skills.matched_required) or "none",
+            "missing_required": ", ".join(skills.missing_required) or "none",
+            "missing_preferred": ", ".join(skills.missing_preferred) or "none",
+            "have_years": resume.years_experience,
+            "need_years": job.min_years_experience,
+            "extra": ", ".join(skills.extra_skills) or "none",
+        })
+        return {"summary": advice.summary, "recommendations": advice.recommendations or fallback["recommendations"]}
+    except Exception as exc:
+        log.warning("LLM advice failed: %s", exc)
+        return {**fallback, "errors": [f"llm_advice: {exc}"]}
 
 
 def strong_fit_node(state: MatcherState) -> dict:
