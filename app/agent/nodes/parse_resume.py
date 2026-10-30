@@ -1,9 +1,14 @@
 import re
 
 from app.agent.state import MatcherState
+from app.llm.client import get_llm
+from app.llm.prompts import RESUME_PROMPT, LLMResumeExtraction
+from app.logging_config import get_logger
 from app.models.schemas import ResumeProfile
 from app.scoring.experience import education_level, resume_years
 from app.skills.extractor import extract_skills
+
+log = get_logger(__name__)
 
 
 def guess_name(text: str) -> str | None:
@@ -25,4 +30,17 @@ def parse_resume(state: MatcherState) -> dict:
         education=labels,
     )
 
-    return {"resume": profile}
+    llm = get_llm()
+    if llm is None:
+        return {"resume": profile}
+    try:
+        result: LLMResumeExtraction = (RESUME_PROMPT | llm.with_structured_output(LLMResumeExtraction)).invoke(
+            {"text": text[:12000]}
+        )
+        llm_skills = extract_skills(" , ".join(result.skills))  # map LLM names onto our taxonomy
+        profile.skills = sorted(set(profile.skills) | set(llm_skills))
+        profile.name = result.name or profile.name
+        return {"resume": profile}
+    except Exception as exc:
+        log.warning("LLM resume parsing failed: %s", exc)
+        return {"resume": profile, "errors": [f"llm_resume: {exc}"]}
