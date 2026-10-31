@@ -1,4 +1,5 @@
 from app.agent.graph import run_matcher
+from app.report.formatter import to_markdown
 
 
 def test_dotnet_resume_against_dotnet_jd(resume_text, jd_text):
@@ -24,3 +25,9 @@ def test_perfect_match_skips_recommendations():
     report = run_matcher(resume, jd)
     assert report.fit_label == "Strong fit"
     assert report.recommendations == []
+
+
+def test_markdown_report(resume_text, jd_text):
+    md = to_markdown(run_matcher(resume_text, jd_text))
+    assert md.startswith("# Resume Gap Analysis")
+    assert "## Recommendations" in md
