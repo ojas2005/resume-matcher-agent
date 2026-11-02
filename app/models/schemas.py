@@ -50,3 +50,8 @@ class GapReport(BaseModel):
     experience_gap_years: float = 0.0
     summary: str
     recommendations: list[Recommendation] = Field(default_factory=list)
+
+
+class MatchTextRequest(BaseModel):
+    resume_text: str = Field(min_length=20)
+    jd_text: str = Field(min_length=20)
