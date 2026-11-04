@@ -10,8 +10,14 @@ from functools import lru_cache
 from langgraph.graph import END, START, StateGraph
 
 from app.agent.nodes import (
-    match_node, parse_jd, parse_resume, recommend_node,
-    report_node, route_after_score, score_node, strong_fit_node,
+    match_node,
+    parse_jd,
+    parse_resume,
+    recommend_node,
+    report_node,
+    route_after_score,
+    score_node,
+    strong_fit_node,
 )
 from app.agent.state import MatcherState
 from app.models.schemas import GapReport
