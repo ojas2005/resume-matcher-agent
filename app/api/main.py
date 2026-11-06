@@ -11,7 +11,7 @@ setup_logging()
 app = FastAPI(
     title=get_settings().app_name,
     description="Upload a resume and a job description, get a skill gap analysis back.",
-    version="0.1.0",
+    version="1.0.0",
 )
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 app.include_router(router)
