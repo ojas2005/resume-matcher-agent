@@ -87,3 +87,42 @@ curl -X POST "http://localhost:8000/match?format=markdown" \
 docker build -t resume-matcher-agent .
 docker run -p 8000:8000 --env-file .env resume-matcher-agent
 ```
+
+## Sample output
+
+```
+# Resume Gap Analysis
+**Candidate:** Rahul Verma
+**Role:** Senior .NET Backend Developer
+**Result:** Strong fit (80/100)
+
+| Area | Score |
+|---|---|
+| Required skills | 80% |
+| Preferred skills | 40% |
+| Experience | 100% |
+| Education | 100% |
+
+## Recommendations
+- [HIGH] docker: Containerise one of your existing APIs and push the image to a registry.
+- [HIGH] microservices: Split a monolith project into two services that talk over REST or gRPC.
+- [MEDIUM] kubernetes: Deploy a containerised service to a local kind/minikube cluster ...
+```
+
+## Configuration
+
+All settings live in `.env` (see `.env.example`): LLM provider and model, upload size limit, log level and the four scoring weights.
+
+## Tests
+
+```bash
+pytest -q
+```
+
+The suite forces `USE_LLM=false`, so it never calls a paid API. CI runs ruff and pytest on every push.
+
+## Roadmap
+
+- Semantic skill matching with embeddings for skills outside the taxonomy
+- Batch mode: rank many resumes against one JD
+- Simple web UI for uploads
